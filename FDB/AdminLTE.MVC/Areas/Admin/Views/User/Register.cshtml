@@ -1,0 +1,146 @@
+@model AdminLTE.MVC.ViewModels.RegisterVM
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Add Users</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <form asp-action="Register" method="post" enctype="multipart/form-data" novalidate>
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-sm-12">
+                                    <div class="form-group text-center">
+                                        <label for="UserImg">User Picture</label>
+                                        <div class="mb-3">
+                                            <img src="~/UserPic/Default_user.jpg" id="userImgPreview" class="img-circle img-thumbnail" alt="User Image" style="width: 150px; height: 150px;">
+                                        </div>
+                                        <input type="file" asp-for="UserImg" class="form-control" onchange="previewImage(event)">
+                                        <span asp-validation-for="UserImg" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-9 col-sm-12">
+                                    <div class="field item form-group">
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align">User Id</label>
+                                        <div class="col-md-6 col-sm-6">
+                                            <input type="text" asp-for="UserId" class="form-control" placeholder="Enter Your User Id" />
+                                            <span asp-validation-for="UserId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="field item form-group">
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align">First Name<span class="required"style="color:red">*</span></label>
+                                        <div class="col-md-6 col-sm-6">
+                                            <input type="text" required="required"  asp-for="FirstName" class="form-control" placeholder="Enter Your First Name" />
+                                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="field item form-group">
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align">Middle Name</label>
+                                        <div class="col-md-6 col-sm-6">
+                                            <input type="text" asp-for="MiddleName" class="form-control" placeholder="Enter Your Middle Name" />
+                                            <span asp-validation-for="MiddleName" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="field item form-group">
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align">Last Name<span class="required" style=" color:red">*</span></label>
+                                        <div class="col-md-6 col-sm-6">
+                                            <input type="text" asp-for="LastName" class="form-control" required="required" placeholder="Enter Your Last Name" />
+                                            <span asp-validation-for="LastName" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="field item form-group">
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align">Address</label>
+                                        <div class="col-md-6 col-sm-6">
+                                            <input type="text" asp-for="Address" class="form-control" placeholder="Enter Your Address" />
+                                            <span asp-validation-for="Address" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="field item form-group">
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align">Email<span class="required"style="color:red">*</span></label>
+                                        <div class="col-md-6 col-sm-6">
+                                            <input asp-for="Email" class="form-control" required="required" type="email" placeholder="Enter Your Email" />
+                                            <span asp-validation-for="Email" clas   s="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="field item form-group">
+                                        <label class="col-form-label col-md-3 col-sm-3  label-align">Telephone<span class="required" style="color:red">*</span></label>
+                                        <div class="col-md-6 col-sm-6">
+                                            <input class="form-control" asp-for="Phone" type="tel" class='tel' name="phone" required='required' data-validate-length-range="8,20" placeholder="Enter Your Phone Number" />
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="field item form-group">
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align">Password<span class="required" style="color:red">*</span></label>
+                                        <div class="col-md-6 col-sm-6">
+                                            <input asp-for="Password" class="form-control" type="password" placeholder="Enter Your Password"  required />
+                                            <span asp-validation-for="Password" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="field item form-group">
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align">Repeat password<span class="required" style="color:red">*</span></label>
+                                        <div class="col-md-6 col-sm-6">
+                                            <input class="form-control" type="password" name="Password2" data-validate-linked='Password' required='required' placeholder="Confirm Password" />
+                                        </div>
+                                    </div>
+                                    @if (User.IsInRole("Super Admin"))
+                                    {
+                                        <div class="field item form-group">
+                                            <label class="col-form-label col-md-3 col-sm-3 label-align">Select Theater<span
+                                                    class="required" style="color:red">*</span></label>
+                                            <div class="col-md-6 col-sm-6">
+                                                <select asp-for="TheaterId" asp-items="ViewBag.Theatres"
+                                                    class="form-control"></select>
+                                            </div>
+                                        </div>
+                                    }
+                                    <div class="field item form-group">
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align">Select Role<span
+                                                class="required" style="color:red">*</span></label>
+                                        <div class="col-md-6 col-sm-6">
+                                            <select asp-for="Roles" asp-items="ViewBag.Roles"
+                                                    class="form-control"></select>
+                                        </div>
+                                    </div>
+
+                                   @*  <div class="field item form-group">
+                                        <label class="col-form-label col-md-3 col-sm-3 label-align">Is Theater Admin</label>
+                                        <div class="col-md-6 col-sm-6">
+                                            <input type="checkbox" class="flat" asp-for="IsAdmin">
+                                            <span asp-validation-for="IsAdmin" class="text-danger"></span>
+                                        </div>
+                                    </div> *@
+                                    <div class="ln_solid">
+                                        <div class="form-group">
+                                            <div class="col-md-6 offset-md-3">
+                                                <button type='submit' class="btn btn-primary">Submit</button>
+                                                <button type='reset' class="btn btn-success">Reset</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <script>
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function(){
+                var output = document.getElementById('userImgPreview');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+

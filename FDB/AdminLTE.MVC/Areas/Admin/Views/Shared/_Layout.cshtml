@@ -1,0 +1,729 @@
+@using AdminLTE.MVC.Helpers
+@using AdminLTE.MVC.Models
+@using Microsoft.AspNetCore.Identity;
+@using AdminLTE.MVC.Data
+@inject UserManager<ApplicationUser> _userManager;
+@inject ApplicationDbContext _context
+
+@{
+    var loggedInUser = new ApplicationUser();
+    loggedInUser = _userManager.Users?.FirstOrDefault(x => x.UserName == User.Identity!.Name);
+    var notification = _context.NotificationAlerts!.ToList().Where(x => x.IsRead == false).Take(5).OrderBy(x => x.DateTime);
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="~/logo.jpg" type="image/ico" />
+
+    <title>FDF</title>
+     <link rel="stylesheet" type="text/css" href="~/css/site.css" /> 
+    <!-- Bootstrap -->
+    <link href="~/Dashboard/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="~/Dashboard/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="~/Dashboard/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="~/Dashboard/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+    <!-- bootstrap-progressbar -->
+    <link href="~/Dashboard/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="~/Dashboard/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+    <!-- bootstrap-daterangepicker -->
+    <link href="~/Dashboard/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="~/Dashboard/build/css/custom.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet">
+    
+    
+</head>
+<style>
+    .export-button-container {
+        text-align: right;
+    }
+</style>
+
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col menu_fixed">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="https://film.gov.np" class="site_title">
+                            <img class="img-fluid" width="50px" src="~/img/nepalgov.png" alt="" />
+                            FDF
+                        </a>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <!-- menu profile quick info -->
+                    <div class="profile clearfix">
+                        <div class="profile_pic">
+                            <img src="~/UserPic/@loggedInUser?.PictureUrl" alt="..." class="img-circle profile_img">
+                        </div>
+                        <div class="profile_info">
+                            <span>Welcome</span>
+                            <h2> @loggedInUser?.FirstName @loggedInUser?.LastName</h2>
+                        </div>
+                    </div>
+                    <!-- /menu profile quick info -->
+
+                    <br />
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <h3>General</h3>
+                            <ul class="nav side-menu">
+                                <li asp-area="Admin" asp-controller="Dashboard" asp-action="Index"
+                                    class="@Url.MakeActiveClass("Dashboard", "Index")">
+                                    <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                                        <i class="fa fa-dashboard"></i> Dashboard
+                                    </a>
+                                </li>
+
+                                <li class="@Url.MakeActiveClass("User","Index")">
+                                    <a>
+                                        <i class="fa fa-user"></i> Users
+                                        <span class="fa fa-chevron-down"></span>
+                                    </a>
+                                    <ul class="nav child_menu">
+                                        <li>
+                                            <a asp-area="Admin" asp-controller="User" asp-action="Index">Users List</a>
+                                        </li>
+                                        <li>
+                                            <a asp-area="Admin" asp-controller="User" asp-action="Register">Add User</a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                            </ul>
+                            @if (User.IsInRole("Super Admin"))
+                            {
+
+                                <ul class="nav side-menu">
+                                    <li class="@Url.MakeActiveClass("User","Index")">
+                                        <a>
+                                            <i class="fa fa-film"></i>
+                                            Theater <span class="fa fa-chevron-down"></span>
+                                        </a>
+                                        <ul class="nav child_menu">
+                                            <li>
+                                                <a asp-area="Admin" asp-controller="Theater" asp-action="Index">
+                                                    Theater
+                                                    List
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-area="Admin" asp-controller="Theater" asp-action="TheaterAdd">
+                                                    Add
+                                                    Theater
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+                                </ul>
+                            }
+                            <ul class="nav side-menu">
+                                <li class="@Url.MakeActiveClass("ReceiptUpload","Index")">
+                                    <a>
+                                        <i class="fa fa-newspaper-o"></i> Receipt <span class="fa fa-chevron-down"></span>
+                                    </a>
+                                    <ul class="nav child_menu">
+                                        <li>
+                                            <a asp-area="Admin" asp-controller="ReceiptUpload"
+                                               asp-action="Index">Receipt List</a>
+                                        </li>
+                                        <li>
+                                            <a asp-area="Admin" asp-controller="ReceiptUpload" asp-action="Create">
+                                                Add
+                                                Receipt
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                            </ul>
+                            @* <ul class="nav side-menu">
+                            <li class="@Url.MakeActiveClass("Movie","Index")">
+                            <a>
+                            <i class="fa fa-film"></i> Movie <span class="fa fa-chevron-down"></span>
+                            </a>
+                            <ul class="nav child_menu">
+                            <li>
+                            <a asp-area="Admin" asp-controller="Movie"
+                            asp-action="Index">Movie List</a>
+                            </li>
+                            <li>
+                            <a asp-area="Admin" asp-controller="Movie" asp-action="MovieAdd">
+                            Add Movie
+                            </a>
+                            </li>
+
+                                    </ul>
+                                </li>
+                            </ul> *@
+                            <ul class="nav side-menu">
+                                <li class="@Url.MakeActiveClass("Brand","Index")">
+                                    <a>
+                                        <i class="fa fa-bandcamp"></i>Brand <span class="fa fa-chevron-down"></span>
+                                    </a>
+                                    <ul class="nav child_menu">
+                                        <li>
+                                            <a asp-area="Admin" asp-controller="Brand"
+                                               asp-action="Index">Brand List</a>
+                                        </li>
+                                        <li>
+                                            <a asp-area="Admin" asp-controller="Brand" asp-action="BrandAdd">
+                                                Add Brand
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul class="nav side-menu">
+                                <li class="@Url.MakeActiveClass("IRDOffice","Index")">
+                                    <a>
+                                        <i class="fa fa-building"></i>IRD Office <span class="fa fa-chevron-down"></span>
+                                    </a>
+                                    <ul class="nav child_menu">
+                                        <li>
+                                            <a asp-area="Admin" asp-controller="IRDOffice"
+                                               asp-action="Index">IRD Office List</a>
+                                        </li>
+                                        <li>
+                                            <a asp-area="Admin" asp-controller="IRDOffice" asp-action="IRDOfficeAdd">
+                                                Add IRD Office
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            
+
+                        </div>
+
+
+                    </div>
+                    <!-- /sidebar menu -->
+                    <!-- /menu footer buttons -->
+                    <div class="sidebar-footer hidden-small">
+                        <a data-toggle="tooltip" data-placement="top" title="Settings">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                            <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Lock">
+                            <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                    <!-- /menu footer buttons -->
+                </div>
+            </div>
+
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <div class="nav toggle">
+                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                    </div>
+                    <nav class="nav navbar-nav">
+                        <ul class=" navbar-right">
+                            <li class="nav-item dropdown open" style="padding-left: 15px;">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true"
+                                   id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
+                                    <img src="~/UserPic/@loggedInUser?.PictureUrl" alt=""> @loggedInUser?.FirstName
+                                    @loggedInUser?.LastName
+                                </a>
+                                <div class="dropdown-menu dropdown-usermenu pull-right"
+                                     aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" asp-action="Profile" asp-controller="User" asp-area="Admin"
+                                       asp-route-id="@loggedInUser?.Id"> Profile</a>
+                                    @* <a class="dropdown-item" href="javascript:;">
+                                        <span class="badge bg-red pull-right">50%</span>
+                                        <span>Settings</span>
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:;">Help</a> *@
+                                    <a class="dropdown-item" asp-action="Logout" asp-controller="User"
+                                       asp-area="Admin">
+                                        <i class="fa fa-sign-out pull-right"></i>
+                                        Log
+                                        Out
+                                    </a>
+                                </div>
+                            </li>
+
+                            <li role="presentation" class="nav-item dropdown open">
+                                <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1"
+                                   data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-bell"></i>
+                                    <span class="badge bg-green">@notification.Count()</span>
+                                </a>
+                                <ul class="dropdown-menu list-unstyled msg_list" role="menu"
+                                    aria-labelledby="navbarDropdown1">
+                                    @foreach (var item in notification)
+                                    {
+                                        <li class="nav-item notification-item" data-id="@item.Id">
+                                            <a class="dropdown-item">
+                                                <span>
+                                                    <span><strong>@item.Title</strong></span>
+                                                    <span class="time">@TimeAgoHelper.GetTimeAgo(item.DateTime)</span>
+                                                </span>
+                                                <span class="message">
+                                                    @item.Message
+                                                </span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @* <li class="nav-item">
+                                    <div class="text-center">
+                                    <a class="dropdown-item">
+                                    <strong>See All Alerts</strong>
+                                    <i class="fa fa-angle-right"></i>
+                                    </a>
+                                    </div>
+                                    </li> *@
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /top navigation -->
+            @RenderBody()
+            <!-- footer content -->
+            <footer>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="~/Dashboard/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="~/Dashboard/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- FastClick -->
+    <script src="~/Dashboard/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="~/Dashboard/vendors/nprogress/nprogress.js"></script>
+    <!-- Chart.js -->
+    <script src="~/Dashboard/vendors/Chart.js/dist/Chart.min.js"></script>
+    <!-- gauge.js -->
+    <script src="~/Dashboard/vendors/gauge.js/dist/gauge.min.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="~/Dashboard/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="~/Dashboard/vendors/iCheck/icheck.min.js"></script>
+    <!-- Skycons -->
+    <script src="~/Dashboard/vendors/skycons/skycons.js"></script>
+    <!-- Flot -->
+    <script src="~/Dashboard/vendors/Flot/jquery.flot.js"></script>
+    <script src="~/Dashboard/vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="~/Dashboard/vendors/Flot/jquery.flot.time.js"></script>
+    <script src="~/Dashboard/vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="~/Dashboard/vendors/Flot/jquery.flot.resize.js"></script>
+    <!-- Flot plugins -->
+    <script src="~/Dashboard/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="~/Dashboard/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="~/Dashboard/vendors/flot.curvedlines/curvedLines.js"></script>
+    <!-- DateJS -->
+    <script src="~/Dashboard/vendors/DateJS/build/date.js"></script>
+
+    <script src="~/Dashboard/vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="~/Dashboard/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="~/Dashboard/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="~/Dashboard/vendors/moment/min/moment.min.js"></script>
+    <script src="~/Dashboard/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="~/Dashboard/build/js/custom.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+
+    <script src="~/Dashboard/vendors/validator/multifield.js"></script>
+    <script src="~/Dashboard/vendors/validator/validator.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+
+    <script>
+        $(document).ready(function () {
+            var deleteUrl;
+            var deletedId;
+            var table = $('#myTable').DataTable();
+
+        // Function to initialize the delete button event listener
+        function initializeDeleteButton() {
+            $('.delete-button-theater').off('click').on('click', function (e) {
+                e.preventDefault();
+                deleteUrl = '@Url.Action("Delete", "Theater", new { area = "Admin" })/' + $(this).data('id');
+                deletedId = $(this).data('id');
+                $('#deleteConfirmationModal').modal('show');
+            });
+            $('.delete-button-Receipt').off('click').on('click', function (e) {
+                e.preventDefault();
+                deleteUrl = '@Url.Action("Delete", "ReceiptUpload", new { area = "Admin" })/' + $(this).data('id');
+                deletedId = $(this).data('id');
+                $('#deleteConfirmationModal').modal('show');
+            });
+            $('.delete-button-brand').off('click').on('click', function (e) {
+                e.preventDefault();
+                deleteUrl = '@Url.Action("Delete", "Brand", new { area = "Admin" })/' + $(this).data('id');
+                deletedId = $(this).data('id');
+
+                $('#deleteConfirmationModal').modal('show');
+            });
+            $('.delete-button-ird').off('click').on('click', function (e) {
+                e.preventDefault();
+                deleteUrl = '@Url.Action("Delete", "IRDOffice", new { area = "Admin" })/' + $(this).data('id');
+                deletedId = $(this).data('id');
+
+                $('#deleteConfirmationModal').modal('show');
+            });
+            
+
+                // Handle checkbox change
+                $('.check-item').off('change').on('change', function () {
+                    toggleApproveRejectButtons();
+                });
+
+                // Handle check-all checkbox
+                $('#check-all').off('change').on('change', function () {
+                    var isChecked = $(this).is(':checked');
+                    $('.check-item').prop('checked', isChecked);
+                    toggleApproveRejectButtons();
+                });
+        }
+
+        // Initialize the delete button event listener on page load
+        initializeDeleteButton();
+
+        // Re-initialize the delete button event listener every time the table is redrawn
+        table.on('draw', function () {
+            initializeDeleteButton();
+        });
+            function toggleApproveRejectButtons() {
+                var selectedIds = getSelectedIds();
+                if (selectedIds.length > 0) {
+                    $('#approveButton').prop('disabled', false);
+                    $('#rejectButton').prop('disabled', false);
+                } else {
+                    $('#approveButton').prop('disabled', true);
+                    $('#rejectButton').prop('disabled', true);
+                }
+            }
+
+            // Function to get selected IDs
+            function getSelectedIds() {
+                return $('.check-item:checked').map(function () {
+                    return $(this).data('id');
+                }).get();
+            }
+
+            // Handle approve button click
+            $('#approveButton').click(function () {
+                let ids = getSelectedIds();
+                sendAjaxRequest('@Url.Action("ChangeStatus", "ReceiptUpload", new { area = "Admin", approve = true })', ids, true);
+            });
+
+            // Handle reject button click
+            $('#rejectButton').click(function () {
+                let ids = getSelectedIds();
+                sendAjaxRequest('@Url.Action("ChangeStatus", "ReceiptUpload", new { area = "Admin", approve = false })', ids, false);
+            });
+
+            // Function to send an AJAX request
+            function sendAjaxRequest(url, ids, approve) {
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    data: JSON.stringify({ Ids: ids, approve: approve }),
+                    success: function (response) {
+                        if (response == "Success") {
+                            window.location.reload();
+                        } else {
+                            alert("Failed to update status: " + response);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("An error occurred: " + error);
+                    }
+                });
+            }
+            // //Region for Approval of Receipt
+            // // Handle "check-all" checkbox click
+            // //"paginate": false,
+            // $('#check-all').click(function () {
+            //     $('.check-item').prop('checked', this.checked);
+            //     toggleButtons();
+            //     event.preventDefault();
+            // });
+
+            // // Ensure "check-all" checkbox is checked/unchecked based on row checkboxes
+            // $('.check-item').change(function () {
+            //     $('#check-all').prop('checked', $('.check-item:checked').length == $('.check-item').length);
+            //     toggleButtons();
+            // });
+
+            // // Function to toggle the approve and reject buttons
+            // function toggleButtons() {
+            //     let selected = $('.check-item:checked').length > 0;
+            //     $('#approveButton').prop('disabled', !selected);
+            //     $('#rejectButton').prop('disabled', !selected);
+            // }
+
+            // // Function to get selected IDs
+            // function getSelectedIds() {
+            //     return $('.check-item:checked').map(function () {
+            //         return $(this).data('id');
+            //     }).get();
+            // }
+
+            // // Handle approve button click
+            // $('#approveButton').click(function () {
+            //     let ids = getSelectedIds();
+            //     sendAjaxRequest('@Url.Action("ChangeStatus", "ReceiptUpload", new { area = "Admin", approve = true })', ids, true);
+            // });
+
+            // // Handle reject button click
+            // $('#rejectButton').click(function () {
+            //     let ids = getSelectedIds();
+            //     sendAjaxRequest('@Url.Action("ChangeStatus", "ReceiptUpload", new { area = "Admin", approve = false })', ids, false);
+            // });
+
+            // // Function to send an AJAX request
+            // function sendAjaxRequest(url, ids, approve) {
+            //     $.ajax({
+            //         url: url,
+            //         type: 'POST',
+            //         contentType: 'application/json; charset=utf-8',
+            //         dataType: 'json',
+            //         data: JSON.stringify({ Ids: ids, approve: approve }),
+            //         success: function (response) {
+            //             if (response == "Success") {
+            //                 window.location.reload();
+            //             } else {
+            //                 alert("Failed to update status: " + response);
+            //             }
+            //         },
+            //         error: function (xhr, status, error) {
+            //             alert("An error occurred: " + error);
+            //         }
+            //     });
+            // }
+            // //End Region for Approval of Receipt
+
+
+            // Form validation
+            if (document.forms.length > 0) {
+                var validator = new FormValidator({ "events": ['blur', 'input', 'change'] }, document.forms[0]);
+                document.forms[0].onsubmit = function (e) {
+                    var validatorResult = validator.checkAll(this);
+                    return !!validatorResult.valid;
+                };
+                document.forms[0].onreset = function (e) {
+                    validator.reset();
+                };
+                $('.toggleValidationTooltips').change(function () {
+                    validator.settings.alerts = !this.checked;
+                    if (this.checked) {
+                        $('form .alert').remove();
+                    }
+                }).prop('checked', false);
+            } else {
+                console.error("No forms found on the page.");
+            }
+
+            // Handle file input change
+            $(".form-control").on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                document.getElementById('thumbnail').src = window.URL.createObjectURL(this.files[0]);
+            });
+
+            // Delete button handlers
+            
+            // $('.delete-button-theater').on('click', function (e) {
+            //     e.preventDefault();
+            //     deleteUrl = '@Url.Action("Delete", "Theater", new { area = "Admin" })/' + $(this).data('id');
+            //     deletedId = $(this).data('id');
+            //     $('#deleteConfirmationModal').modal('show');
+            // });
+            // $('.delete-button-Receipt').on('click', function (e) {
+            //     e.preventDefault();
+            //     deleteUrl = '@Url.Action("Delete", "ReceiptUpload", new { area = "Admin" })/' + $(this).data('id');
+            //     deletedId = $(this).data('id');
+
+            //     $('#deleteConfirmationModal').modal('show');
+            // });
+            // $('.delete-button-movie').on('click', function (e) {
+            //     e.preventDefault();
+            //     deleteUrl = '@Url.Action("Delete", "Movie", new { area = "Admin" })/' + $(this).data('id');
+            //     $('#deleteConfirmationModal').modal('show');
+            // });
+            // $('.delete-button-brand').on('click', function (e) {
+            //     e.preventDefault();
+            //     deleteUrl = '@Url.Action("Delete", "Brand", new { area = "Admin" })/' + $(this).data('id');
+            //     deletedId = $(this).data('id');
+
+            //     $('#deleteConfirmationModal').modal('show');
+            // });
+            // $('.delete-button-ird').on('click', function (e) {
+            //     e.preventDefault();
+            //     deleteUrl = '@Url.Action("Delete", "IRDOffice", new { area = "Admin" })/' + $(this).data('id');
+            //     deletedId = $(this).data('id');
+
+            //     $('#deleteConfirmationModal').modal('show');
+            // });
+
+
+            $('#confirmDeleteButton').on('click', function () {
+                var button = $(this);
+                $.ajax({
+                    url: deleteUrl,
+                    type: 'POST',
+                    dataType: "json",
+                    success: function (result) {
+                        $('#deleteConfirmationModal').modal('hide');
+                       // console.log(result);
+                        if (result.status === "Success") {
+                            var table = $('#myTable').DataTable();
+                            table.rows().every(function () {
+                                var row = $(this.node());
+                                var link = row.find('a[data-id="' + deletedId + '"]');
+                                if (link.length > 0) {
+                                    table.row(this).remove().draw(false); 
+                                } 
+                            });
+                            // var row = table.row(button.closest('tr')).index();
+                            // table.row(row).remove().draw(false);
+                        } else {
+                            // window.location.reload();
+                          
+                        }
+                    },
+                    error: function () {
+                        $('#deleteConfirmationModal').modal('hide');
+                        showNotification('error', "An error occurred while processing the request.");
+                    }
+                });
+            });
+
+             
+
+
+            // Notification item click handler
+
+
+
+
+
+            $('.notification-item').on('click', function () {
+                var notificationId = $(this).data('id');
+                $.ajax({
+                    url: '@Url.Action("MarkAsRead", "NotificationAlert", new { area = "Admin" })',
+                    type: 'POST',
+                    data: { id: notificationId },
+                    success: function (response) {
+                        console.log('Notification marked as read.');
+                    },
+                    error: function (xhr, status, error) {
+                        console.log('Error marking notification as read:', error);
+                    }
+                });
+            });
+            //for chart
+            if ($('#chart_plot_Month').length) {
+
+                var ctx = document.getElementById("chart_plot_Month");
+                var lineChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ["January", "February", "March", "April", "May", "June", "July"],
+                        datasets: [{
+                            backgroundColor: "rgba(38, 185, 154, 0.31)",
+                            borderColor: "rgba(38, 185, 154, 0.7)",
+                            pointBorderColor: "rgba(38, 185, 154, 0.7)",
+                            pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+                            pointHoverBackgroundColor: "#fff",
+                            pointHoverBorderColor: "rgba(220,220,220,1)",
+                            pointBorderWidth: 1,
+                            data: [31, 74, 6, 39, 20, 85, 7]
+                        },
+        @* {
+                        backgroundColor: "rgba(3, 88, 106, 0.3)",
+                        borderColor: "rgba(3, 88, 106, 0.70)",
+                        pointBorderColor: "rgba(3, 88, 106, 0.70)",
+                        pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
+                        pointHoverBackgroundColor: "#fff",
+                        pointHoverBorderColor: "rgba(151,187,205,1)",
+                        pointBorderWidth: 1,
+                        data: [82, 23, 66, 9, 99, 4, 2]
+                        } *@
+                                        ]
+                    },
+                });
+
+            }
+            if ($('#chart_plot_Week').length) {
+
+                var ctx = document.getElementById("chart_plot_Week");
+                var lineChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ["Sunday", "Monday", "Tuesday", "Wenesday", "Thursday", "Friday", "Saturday"],
+                        datasets: [{
+                            backgroundColor: "rgba(38, 185, 154, 0.31)",
+                            borderColor: "rgba(38, 185, 154, 0.7)",
+                            pointBorderColor: "rgba(38, 185, 154, 0.7)",
+                            pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+                            pointHoverBackgroundColor: "#fff",
+                            pointHoverBorderColor: "rgba(220,220,220,1)",
+                            pointBorderWidth: 1,
+                            data: [31, 74, 6, 39, 20, 85, 7]
+                        },
+        @* {
+                        backgroundColor: "rgba(3, 88, 106, 0.3)",
+                        borderColor: "rgba(3, 88, 106, 0.70)",
+                        pointBorderColor: "rgba(3, 88, 106, 0.70)",
+                        pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
+                        pointHoverBackgroundColor: "#fff",
+                        pointHoverBorderColor: "rgba(151,187,205,1)",
+                        pointBorderWidth: 1,
+                        data: [82, 23, 66, 9, 99, 4, 2]
+                        } *@
+                                        ]
+                    },
+                });
+
+            }
+        });
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+    @await Component.InvokeAsync("Notyf")
+
+</body>
+
+</html>

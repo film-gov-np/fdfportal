@@ -1,0 +1,86 @@
+@model List<AdminLTE.MVC.ViewModels.BrandResponseModel>
+
+<div class="right_col" role="main">
+    <div class="col-md-12 col-sm-12 ">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>List Of Brands</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card-box table-responsive">
+                            <form asp-action="BrandFBDAdd" method="post">
+                                <table class="table table-striped table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Brand Id</th>
+                                            <th>Brand Code</th>
+                                            <th>Brand Name</th>
+                                            <th>Grade Code</th>
+                                            <th>Email</th>
+                                            <th>ApiUsername</th>
+                                            <th>ApiPassword</th>
+                                            <th>Status Value</th>
+                                            <th>Is Test</th>
+                                            <th>Is Modified</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (int i = 0; i < Model.Count; i++)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Model[i].BrandId
+                                                    <input type="hidden" asp-for="@Model[i].BrandId" />
+                                                </td>
+                                                <td>
+                                                    @Model[i].BrandCode
+                                                    <input type="hidden" asp-for="@Model[i].BrandCode" />
+                                                </td>
+                                                <td>
+                                                    @Model[i].BrandName
+                                                    <input type="hidden" asp-for="@Model[i].BrandName" />
+                                                </td>
+                                                <td>
+                                                    @Model[i].Email
+                                                    <input type="hidden" asp-for="@Model[i].Email" />
+                                                </td>
+                                                <td>
+                                                    @Model[i].ApiUsername
+                                                    <input type="hidden" asp-for="@Model[i].ApiUsername" />
+                                                </td>
+                                                <td>
+                                                    @Model[i].ApiPassword
+                                                    <input type="hidden" asp-for="@Model[i].ApiPassword" />
+                                                </td>
+                                                <td>
+                                                    @Model[i].StatusValue
+                                                    <input type="hidden" asp-for="@Model[i].StatusValue" />
+                                                </td>
+                                                <td>
+                                                    @Model[i].IsTest
+                                                    <input type="hidden" asp-for="@Model[i].IsTest" />
+                                                </td>
+                                                <td>
+                                                    @Model[i].StatusValue
+                                                    <input type="hidden" asp-for="@Model[i].StatusValue" />
+                                                </td>
+                                                <td>
+                                                    @Model[i].IsModified
+                                                    <input type="hidden" asp-for="@Model[i].IsModified" />
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

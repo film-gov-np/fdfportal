@@ -1,0 +1,66 @@
+@model List<AdminLTE.MVC.ViewModels.UserVM>
+<div class="right_col" role="main">
+    <div class="col-md-12 col-sm-12 ">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>List Of Users</h2>
+                <div class="export-button-container">
+                    <a href="@Url.Action("ExportUser", "User", new { area = "Admin" })" class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-export"></span> Export
+                    </a>
+                </div>
+            
+                <div class="clearfix"></div>    
+            </div>
+            <div class="x_content">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card-box table-responsive">
+                            <table id="datatable-fixed-header" class="table table-striped table-bordered"
+                                style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>User Id</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>UserName</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Theater Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+
+                                <tbody>
+                                    @foreach (var user in Model)
+                                    {
+                                        <tr>
+                                            <td>@user.UserId</td>
+                                            <td>@user.FirstName</td>
+                                            <td>@user.LastName</td>
+                                            <td>@user.UserName</td>
+                                            <td>@user.Email</td>
+                                            <td>@user.Role</td>
+                                            <td>@user.TheaterName</td>
+                                            <td>
+                                                <span class="mt-2">
+                                                    <a class="btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Reset Password" asp-action="ResetPassword" asp-controller="User"
+                                                       asp-route-id="@user.Id"><i class="fa fa-key"></i></a>
+                                                </span>
+                                                <span class="mt-2">
+                                                    <a class="btn-sm btn-secondary" data-toggle="tooltip" data-placement="top" title="Edit Profile" asp-action="EditProfile" asp-controller="User"
+                                                    asp-route-id="@user.Id"><i class="fa fa-edit"></i></a></span>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

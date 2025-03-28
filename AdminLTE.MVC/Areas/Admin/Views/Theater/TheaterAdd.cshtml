@@ -1,0 +1,95 @@
+@model AdminLTE.MVC.ViewModels.TheaterVM
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Add Theater</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <form asp-action="TheaterAdd" method="post" id="form" novalidate>
+                            <div class="field item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align">Theater Code<span class="required" style="color:red">*</span></label>
+                                <div class="col-md-6 col-sm-6">
+                                    <input type="text" asp-for="TheatreCode" class="form-control"
+                                           placeholder="Enter Your Theatre Code" required="required" />
+                                    <span asp-validation-for="TheatreCode" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="field item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align">PAN Number<span class="required" style="color:red">*</span></label>
+                                <div class="col-md-6 col-sm-6">
+                                    <input type="text" asp-for="PANNumber" class="form-control"
+                                           placeholder="Enter Your Pan Number" required="required" />
+                                    <span asp-validation-for="PANNumber" text-danger"></span>
+                                </div>
+                            </div>
+
+
+                            <div class="field item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align">Theater Name<span class="required" style="color:red">*</span></label>
+                                <div class="col-md-6 col-sm-6">
+                                    <input type="text" asp-for="Name" required="required" class="form-control"
+                                           placeholder="Enter Your Theater Name" />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="field item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align">Brand Code<span class="required" style="color:red">*</span></label>
+                                <div class="col-md-6 col-sm-6">
+                                    <select asp-for="BrandCode" asp-items="ViewBag.BrandMVCs" class="form-control" required="required"></select>
+                                    <span asp-validation-for="BrandCode" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="field item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align">IRD Office<span class="required" style="color:red">*</span></label>
+                                <div class="col-md-6 col-sm-6">
+                                    <select asp-for="IRDOfficeId" asp-items="ViewBag.IRDOffice" class="form-control" required="required"></select>
+                                    <span asp-validation-for="IRDOfficeId" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="field item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                    Phone Number<span class="required" style="color:red">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6">
+                                    <input type="text" asp-for="Phone" required="required" class="form-control"
+                                           placeholder="Enter Your Phone Number" />
+                                    <span asp-validation-for="Phone" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="field item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align">Location<span class="required" style="color:red">*</span></label>
+                                <div class="col-md-6 col-sm-6">
+                                    <input type="text" asp-for="Location" class="form-control"
+                                           placeholder="Enter the Location" />
+                                    <span asp-validation-for="Location" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="field item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align">Description<span class="required" style="color:red">*</span></label>
+                                <div class="col-md-6 col-sm-6">
+                                    <textarea asp-for="Description" class="form-control"></textarea>
+                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="ln_solid">
+                                <div class="form-group">
+                                    <div class="col-md-6 offset-md-3">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="reset" class="btn btn-success">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

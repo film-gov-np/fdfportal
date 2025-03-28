@@ -1,0 +1,81 @@
+@model List<AdminLTE.MVC.ViewModels.TheaterResponseModel>
+
+<div class="right_col" role="main">
+    <div class="col-md-12 col-sm-12 ">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>List Of Theater</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card-box table-responsive">
+                            <form asp-action="TheaterFBDAdd" method="post">
+                                <table class="table table-striped table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Theater Code</th>
+                                            <th>Name</th>
+                                            <th>Address</th>
+                                            <th>Theater Id</th>
+                                            <th>Brand Code</th>
+                                            <th>Email</th>
+                                            <th>Pan Number</th>
+                                            <th>Reg Number</th>
+                                            <th>Vat Number</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (int i = 0; i < Model.Count; i++)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Model[i].TheaterCode
+                                                    <input type="hidden" asp-for="@Model[i].TheaterCode" />
+                                                </td>
+                                                <td>
+                                                    @Model[i].Name
+                                                    <input type="hidden" asp-for="@Model[i].Name" />
+                                                </td>
+                                                <td>
+                                                    @Model[i].Address
+                                                    <input type="hidden" asp-for="@Model[i].Address" />
+                                                </td>
+                                                <td>
+                                                    @Model[i].TheaterId
+                                                    <input type="hidden" asp-for="@Model[i].TheaterId" />
+                                                </td>
+                                                <td>
+                                                    @Model[i].BrandCode
+                                                    <input type="hidden" asp-for="@Model[i].BrandCode" />
+                                                </td>
+                                                <td>
+                                                    @Model[i].Email
+                                                    <input type="hidden" asp-for="@Model[i].Email" />
+                                                </td>
+                                                <td>
+                                                    @Model[i].Pannumber
+                                                    <input type="hidden" asp-for="@Model[i].Pannumber" />
+                                                </td>
+                                                <td>
+                                                    @Model[i].RegNumber
+                                                    <input type="hidden" asp-for="@Model[i].RegNumber" />
+                                                </td>
+                                                <td>
+                                                    @Model[i].Vatnumber
+                                                    <input type="hidden" asp-for="@Model[i].Vatnumber" />
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

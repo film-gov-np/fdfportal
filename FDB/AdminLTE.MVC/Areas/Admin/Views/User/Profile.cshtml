@@ -1,0 +1,116 @@
+@model AdminLTE.MVC.ViewModels.UserVM
+
+<!-- Page Content -->
+<div class="right_col" role="main">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>User Profile</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+                            <div class="profile_img">
+                                <div id="crop-avatar">
+                                    <!-- Current avatar -->
+                                    @{
+                                        
+                                        <img src="~/UserPic/@Model?.PictureUrl" alt="" class="img-responsive avatar-view" id="thumbnail"style="border-radius: 50%; height: 25vh;"/>
+                                        
+                                    }
+                                    @* <img class="img-responsive avatar-view" src="@Model.PictureUrl" alt="Avatar" title="Change the avatar" style="border-radius: 50%;"> *@
+                                </div>
+                            </div>
+                            <h3>@Model.FirstName @Model.LastName</h3>
+
+                            <ul class="list-unstyled user_data">
+                                <li>
+                                    <i class="fa fa-certificate user-profile-icon"></i> @Model.Role
+                                </li>
+                                <li>
+                                    <i class="fa fa-map-marker user-profile-icon"></i> @Model.Address
+                                </li>
+                                <li>
+                                    <i class="fa fa-envelope user-profile-icon"></i> @Model.Email
+                                </li>
+                                <li>
+                                    <i class="fa fa-phone user-profile-icon"></i> @Model.Phone
+                                </li>
+                                
+                            </ul>
+
+                            <a class="btn btn-success" asp-action="EditProfile" asp-controller="User"
+                                                    asp-route-id="@Model.Id" style="color: white;"><i class="fa fa-edit m-right-xs"></i>Edit Profile</a>
+                            <br />
+                        </div>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @* <div class="profile_title">
+                                <div class="col-md-6">
+                                    <h2>User Activity Report</h2>
+                                </div>
+                            </div>
+                            <!-- start of user-activity-graph -->
+                            <div id="graph_bar" style="width:100%; height:280px;"></div>
+                            <!-- end of user-activity-graph --> *@
+
+                            <div class="x_content">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>First Name:</label>
+                                            <p class="form-control-static">@Model.FirstName</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Last Name:</label>
+                                            <p class="form-control-static">@Model.LastName</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Username:</label>
+                                            <p class="form-control-static">@Model.UserName</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Email:</label>
+                                            <p class="form-control-static">@Model.Email</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Theater:</label>
+                                            <p class="form-control-static">@Model.TheaterName</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Role:</label>
+                                            <p class="form-control-static">@Model.Role</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @* <!-- start of recent activity -->
+                            <h2>Recent Activity</h2>
+                            <ul class="messages">
+                                <li>
+                                    <img src="@Model.PictureUrl" class="avatar" alt="Avatar" style="border-radius: 50%;">
+                                    <div class="message_date">
+                                        <h3 class="date text-info">24</h3>
+                                        <p class="month">May</p>
+                                    </div>
+                                    <div class="message_wrapper">
+                                        <h4 class="heading">Lorem ipsum</h4>
+                                        <blockquote class="message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque turpis in ligula venenatis, nec tempor ligula vehicula.</blockquote>
+                                        <br />
+                                    </div>
+                                </li>
+                                <!-- Add more activity items here -->
+                            </ul>
+                            <!-- end of recent activity --> *@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page content -->

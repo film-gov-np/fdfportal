@@ -1,0 +1,118 @@
+@model AdminLTE.MVC.ViewModels.ReceiptVM
+
+<!-- Page Content -->
+<div class="right_col" role="main">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Receipt Details</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="row">
+                        <div class="col-md-3 text-center">
+                            <label><strong>Voucher Image</strong></label>
+                            <div class="form-group">
+                                @{
+                                    if(Model.VoucherImgFrontUrl == null)
+                                    {
+                                        <img src="~/ReceiptUpload/default_image.png" class="img-fluid" id="thumbnail" style="height: 150px; margin-top: 20px;" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/ReceiptUpload/@Model.VoucherImgFrontUrl" class="img-fluid" id="thumbnail" style="height: 150px; margin-top: 20px;" />
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label><strong>Bank Name:</strong></label>
+                                        <p class="form-control-static">@Model.BankName</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><strong>Bank Branch Name:</strong></label>
+                                        <p class="form-control-static">@Model.BankBranchName</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><strong>Voucher No:</strong></label>
+                                        <p class="form-control-static">@Model.VoucherNo</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><strong>Account No:</strong></label>
+                                        <p class="form-control-static">@Model.AccountNo</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><strong>Account Operating Office:</strong></label>
+                                        <p class="form-control-static">@Model.AccountOperatingOffice</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><strong>Cheque/Draft No:</strong></label>
+                                        <p class="form-control-static">@Model.ChequeDraftNo</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><strong>Amount:</strong></label>
+                                        <p class="form-control-static">@Model.Amount</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><strong>Amount in Words:</strong></label>
+                                        <p class="form-control-static">@Model.AmountInWord</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label><strong>Depository Office Code:</strong></label>
+                                        <p class="form-control-static">@Model.DepositoryOfficeCode</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><strong>Depository Office Name:</strong></label>
+                                        <p class="form-control-static">@Model.DepositoryOfficeName</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><strong>Depositor Name:</strong></label>
+                                        <p class="form-control-static">@Model.DepositorName</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><strong>Depositor Phone:</strong></label>
+                                        <p class="form-control-static">@Model.DepositorPhone</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><strong>Transaction Date:</strong></label>
+                                        <p class="form-control-static">@Model.TransactionDate</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><strong>Transaction Date (Nepali):</strong></label>
+                                        <p class="form-control-static">@Model.TransactionDateNep</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><strong>PAN No:</strong></label>
+                                        <p class="form-control-static">@Model.PanNo</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><strong>Remarks:</strong></label>
+                                        <p class="form-control-static">@Model.Remarks</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><strong>Theatre Name:</strong></label>
+                                        <p class="form-control-static">@Model.TheatreName</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <a href="@Url.Action("Edit", "ReceiptUpload", new { id = Model?.Id })" class="btn btn-secondary">Edit</a>
+                            <a href="@Url.Action("Index", "ReceiptUpload")" class="btn btn-primary">Back to List</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page content -->

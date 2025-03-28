@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+    <link rel="icon" href="~/logo.jpg" type="image/ico" />
+
+    <link rel="stylesheet" href="~/LoginForm/fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="~/LoginForm/css/owl.carousel.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/LoginForm/css/bootstrap.min.css">
+    
+    <!-- Style -->
+    <link rel="stylesheet" href="~/LoginForm/css/style.css">
+
+    <title>Login</title>
+  </head>
+  <body>
+    @RenderBody()
+    <script src="~/LoginForm/js/jquery-3.3.1.min.js"></script>
+    <script src="~/LoginForm/js/popper.min.js"></script>
+    <script src="~/LoginForm/js/bootstrap.min.js"></script>
+    <script src="~/LoginForm/js/main.js"></script>
+    @await Component.InvokeAsync("Notyf")
+
+  </body>
+</html>

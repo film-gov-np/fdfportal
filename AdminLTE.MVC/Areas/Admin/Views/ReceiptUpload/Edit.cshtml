@@ -1,0 +1,544 @@
+﻿@model AdminLTE.MVC.ViewModels.ReceiptVM
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Add Receipt</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <form asp-action="Edit" method="post" id="formid" enctype="multipart/form-data" novalidate>
+                            <div class="card-body">
+                                <div class="row">
+
+                                    @if (User.IsInRole("Super Admin"))
+                                    {
+                                        <div class="col-md-4">
+                                            <label for="TheatreId">Theatre Name <span class="required" style="color:red">*</span></label>
+                                            <select asp-for="TheatreId" class="form-control" required="required" id="TheatreDropdown" onchange="UpdateData()">
+                                                @foreach (var theatre in ViewBag.Theatres)
+                                                {
+                                                    <option value="@theatre.Id"
+                                                            data-pan="@theatre.PANNumber"
+                                                            data-bank-name="@theatre.BankName"
+                                                            data-bank-branch="@theatre.BankBranchName"
+                                                            data-account-no="@theatre.AccountNo"
+                                                            data-operating-office="@theatre.AccountOperatingOffice">
+                                                        @theatre.Name
+                                                    </option>
+                                                }
+                                            </select>
+                                            <span asp-validation-for="TheatreId" class="text-danger"></span>
+                                        </div>
+                                    }
+
+                                    <div class="col-md-4">
+                                        <label for="PanNo">Pan No <span class="required" style="color:red">*</span></label>
+                                        <input type="text" asp-for="PanNo" class="form-control" required="required" readonly id="PanNoInput" />
+                                        <span asp-validation-for="PanNo" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="BankName">Bank Name <span class="required" style="color:red">*</span></label>
+                                        <input asp-for="BankName" type="text" class="form-control" required="required" id="BankNameInput" />
+                                        <span asp-validation-for="BankName" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="BankBranchName">Bank Branch Name <span class="required" style="color:red">*</span></label>
+                                        <input asp-for="BankBranchName" type="text" class="form-control" required="required" id="BankBranchNameInput" />
+                                        <span asp-validation-for="BankBranchName" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="AccountNo">Account No <span class="required" style="color:red">*</span></label>
+                                        <input asp-for="AccountNo" type="number" class="form-control" required="required" id="AccountNoInput" />
+                                        <span asp-validation-for="AccountNo" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="AccountOperatingOffice">Account Operating Office <span class="required" style="color:red">*</span></label>
+                                        <input asp-for="AccountOperatingOffice" type="text" class="form-control" required="required" id="AccountOperatingOfficeInput" />
+                                        <span asp-validation-for="AccountOperatingOffice" class="text-danger"></span>
+                                    </div>
+
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th>Cheque No <span class="required" style="color:red">*</span></th>
+                                            <td>
+                                                <input asp-for="ChequeDraftNo" type="number" class="form-control"
+                                                       required="required" />
+                                                <span asp-validation-for="ChequeDraftNo" class="text-danger"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Amount <span class="required" style="color:red">*</span></th>
+                                            <td>
+                                                <input asp-for="Amount" type="number" class="form-control" required="required" />
+                                                <span asp-validation-for="Amount" class="text-danger"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Amount In Words <span class="required" style="color:red">*</span></th>
+                                            <td>
+                                                <input asp-for="AmountInWord" type="text" required="required" class="form-control" required="required" />
+                                                <span asp-validation-for="AmountInWord" class="text-danger"></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="VoucherNo">Voucher No <span class="required" style="color:red">*</span></label>
+                                        <input asp-for="VoucherNo" type="number" class="form-control" required="required" />
+                                        <span asp-validation-for="VoucherNo" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="TransactionDate">
+                                            Transaction Date (भाउचर दाखिला मिति)<span class="required" style="color:red">*</span>
+                                        </label>
+                                        <input asp-for="TransactionDate" type="date" class="form-control"
+                                               value="@DateTime.Now.ToString("yyyy-MM-dd")" required="required" />
+                                        <span asp-validation-for="TransactionDate" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="NepaliMonth">Select Month</label>
+                                        <select asp-for="NepaliMonth" id="MonthDropdown" multiple class="form-control" multiselect-search="true" multiselect-select-all="true" multiselect-max-items="5">
+                                            @foreach (var month in new[] { "Baishakh", "Jestha", "Ashadh", "Shrawan", "Bhadra", "Ashwin", "Kartik", "Mangsir", "Poush", "Magh", "Falgun", "Chaitra" })
+                                            {
+                                                if(Model.NepaliMonth != null)
+                                                {
+                                                    var selected = Model.NepaliMonth.Contains(month) ? "selected" : "";
+                                                    <!option value="@month" @selected>@month</!option>
+
+                                                }
+                                                else
+                                                {
+                                                    <!option value="@month">@month</!option>
+
+                                                }
+
+                                            }
+                                        </select>
+                                        <span class="text-danger" asp-validation-for="NepaliMonth"></span>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="GrossCollection">Gross Collection <span class="required" style="color:red">*</span></label>
+                                        <input asp-for="GrossCollection" type="number" class="form-control" required="required" />
+                                        <span asp-validation-for="GrossCollection" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="FineAmount">Fine Amount <span class="required" style="color:red">*</span></label>
+                                        <input asp-for="FineAmount" type="number" class="form-control" required="required" />
+                                        <span asp-validation-for="GrossCollection" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="Vapata">Vapata <span class="required" style="color:red">*</span></label>
+                                        <input asp-for="Vapata" type="text" class="form-control" required="required" />
+                                        <span asp-validation-for="Vapata" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="DepositoryOfficeName">Depository Office Name <span class="required" style="color:red">*</span></label>
+                                        <input asp-for="DepositoryOfficeName" type="text" class="form-control"
+                                               required="required" />
+                                        <span asp-validation-for="DepositoryOfficeName" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="DepositoryOfficeCode">Depository Office Code <span class="required" style="color:red">*</span></label>
+                                        <input asp-for="DepositoryOfficeCode" type="number" class="form-control"
+                                               required="required" />
+                                        <span asp-validation-for="DepositoryOfficeCode" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="DepositorName">
+                                            Depositor Name <span class="required" style="color:red">*</span>
+                                        </label>
+                                        <input asp-for="DepositorName" type="text" class="form-control" required="required" />
+                                        <span asp-validation-for="DepositorName" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="DepositorPhone">
+                                            Depositor Phone No <span class="required" style="color:red">*</span>
+                                        </label>
+                                        <input asp-for="DepositorPhone" type="tel" class="form-control" required="required" />
+                                        <span asp-validation-for="DepositorPhone" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="VoucherImgFront">Voucher Image <span class="required" style="color:red">*</span></label>
+                                        <input asp-for="VoucherImgFront" type="file" accept="image/*"
+                                               class="form-control" required="required" />
+                                        <span asp-validation-for="VoucherImgFront" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="FineVoucherReceipt">Fine Voucher Receipt Image <span class="required" style="color:red">*</span></label>
+                                        <input asp-for="FineVoucherReceiptFile" type="file" accept="image/*"
+                                               class="form-control" required="required" />
+                                        <span asp-validation-for="FineVoucherReceiptFile" class="text-danger"></span>
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="form-group text-center">
+                                                <div class="mb-3">
+                                                    <img src="~/UserPic/@Model.FineVoucherReceiptUrl" id="userImgPreview" class="img-thumbnail" alt="User Image" style="width: 150px; height: 150px;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="MonthlySalesReportFile">Monthly Sales Report File<span class="required" style="color:red">*</span></label>
+                                        <input asp-for="MonthlySalesReportFile" type="file" accept="image/*"
+                                               class="form-control" required="required" />
+                                        <span asp-validation-for="MonthlySalesReportFile" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="Remarks">Remarks<span class="required" style="color:red">*</span></label>
+                                        <textarea asp-for="Remarks" class="form-control" /></textarea>
+                                        <span asp-validation-for="Remarks" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ln_solid">
+                                <div class="form-group">
+                                    <div class="col-md-4 offset-md-3">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="reset" class="btn btn-success">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function UpdateData() {
+        var theatreDropdown = document.getElementById("TheatreDropdown");
+        var selectedOption = theatreDropdown.options[theatreDropdown.selectedIndex];
+
+        var panNoInput = document.getElementById("PanNoInput");
+        var bankNameInput = document.getElementById("BankNameInput");
+        var bankBranchNameInput = document.getElementById("BankBranchNameInput");
+        var accountNoInput = document.getElementById("AccountNoInput");
+        var accountOperatingOfficeInput = document.getElementById("AccountOperatingOfficeInput");
+
+        // Get the values from the data attributes
+        var panNumber = selectedOption.getAttribute("data-pan");
+        var bankName = selectedOption.getAttribute("data-bank-name");
+        var bankBranchName = selectedOption.getAttribute("data-bank-branch");
+        var accountNo = selectedOption.getAttribute("data-account-no");
+        var accountOperatingOffice = selectedOption.getAttribute("data-operating-office");
+
+        // Set the values to the inputs
+        panNoInput.value = panNumber;
+        bankNameInput.value = bankName;
+        bankBranchNameInput.value = bankBranchName;
+        accountNoInput.value = accountNo;
+        accountOperatingOfficeInput.value = accountOperatingOffice;
+    }
+
+    // Call UpdateData on page load
+    document.addEventListener('DOMContentLoaded', function () {
+        UpdateData();
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+        crossorigin="anonymous"></script>
+
+<style>
+    .multiselect-dropdown {
+        display: inline-block;
+        padding: 2px 5px 0px 5px;
+        border-radius: 4px;
+        border: solid 1px #CED4DA;
+        background-color: white;
+        position: relative;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right .75rem center;
+        background-size: 16px 12px;
+        padding: 6px 12px;
+        height: auto;
+    }
+
+        .multiselect-dropdown span.optext, .multiselect-dropdown span.placeholder {
+            margin-right: 0.5em;
+            margin-bottom: 2px;
+            padding: 1px 0;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .multiselect-dropdown span.optext {
+            background-color: lightgray;
+            padding: 1px 0.75em;
+        }
+
+            .multiselect-dropdown span.optext .optdel {
+                float: right;
+                margin: 0 -6px 1px 5px;
+                font-size: 0.7em;
+                margin-top: 2px;
+                cursor: pointer;
+                color: #666;
+            }
+
+                .multiselect-dropdown span.optext .optdel:hover {
+                    color: #c66;
+                }
+
+        .multiselect-dropdown span.placeholder {
+            color: #CED4DA;
+        }
+
+    .multiselect-dropdown-list-wrapper {
+        box-shadow: gray 0 3px 8px;
+        z-index: 100;
+        padding: 2px;
+        border-radius: 4px;
+        border: solid 1px #CED4DA;
+        display: none;
+        margin: -1px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: white;
+    }
+
+        .multiselect-dropdown-list-wrapper .multiselect-dropdown-search {
+            margin-bottom: 5px;
+        }
+
+    .multiselect-dropdown-list {
+        padding: 2px;
+        height: 15rem;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+        .multiselect-dropdown-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .multiselect-dropdown-list::-webkit-scrollbar-thumb {
+            background-color: #BEC4CA;
+            border-radius: 3px;
+        }
+
+        .multiselect-dropdown-list div {
+            padding: 5px;
+        }
+
+        .multiselect-dropdown-list input {
+            height: 1.15em;
+            width: 1.15em;
+            margin-right: 0.35em;
+        }
+
+        .multiselect-dropdown-list div.checked {
+            background-color: #CED4DA;
+        }
+
+        .multiselect-dropdown-list div:hover {
+            background-color: #CED4DA;
+        }
+
+    .multiselect-dropdown span.maxselected {
+        width: 100%;
+    }
+
+    .multiselect-dropdown-all-selector {
+        display: none; /* Hide the 'Select All' option */
+    }
+</style>
+
+<script>
+    function MultiselectDropdown(options) {
+        var config = {
+            search: true,
+            height: "15rem",
+            placeholder: "select",
+            txtSelected: "selected",
+            txtAll: "All",
+            txtRemove: "Remove",
+            txtSearch: "search",
+            ...options,
+        };
+
+        function newEl(tag, attrs) {
+            var e = document.createElement(tag);
+            if (attrs !== undefined)
+                Object.keys(attrs).forEach((k) => {
+                    if (k === "class") {
+                        Array.isArray(attrs[k])
+                            ? attrs[k].forEach((o) => (o !== "" ? e.classList.add(o) : 0))
+                            : attrs[k] !== ""
+                                ? e.classList.add(attrs[k])
+                                : 0;
+                    } else if (k === "style") {
+                        Object.keys(attrs[k]).forEach((ks) => {
+                            e.style[ks] = attrs[k][ks];
+                        });
+                    } else if (k === "text") {
+                        attrs[k] === ""
+                            ? (e.innerHTML = "&nbsp;")
+                            : (e.innerText = attrs[k]);
+                    } else e[k] = attrs[k];
+                });
+            return e;
+        }
+
+        document.querySelectorAll("select[multiple]").forEach((el, k) => {
+            var div = newEl("div", {
+                class: "multiselect-dropdown",
+                style: {
+                    width: config.style?.width ?? el.clientWidth + "px",
+                    padding: config.style?.padding ?? "",
+                },
+            });
+
+            el.style.display = "none";
+            el.parentNode.insertBefore(div, el.nextSibling);
+
+            var listWrap = newEl("div", {
+                class: "multiselect-dropdown-list-wrapper",
+            });
+
+            var list = newEl("div", {
+                class: "multiselect-dropdown-list",
+                style: { height: config.height },
+            });
+
+            var search = newEl("input", {
+                class: ["multiselect-dropdown-search"].concat([
+                    config.searchInput?.class ?? "form-control",
+                ]),
+                style: {
+                    width: "100%",
+                    display:
+                        el.attributes["multiselect-search"]?.value === "true"
+                            ? "block"
+                            : "none",
+                },
+                placeholder: config.txtSearch,
+            });
+
+            listWrap.appendChild(search);
+            div.appendChild(listWrap);
+            listWrap.appendChild(list);
+
+            el.loadOptions = () => {
+                list.innerHTML = "";
+                Array.from(el.options).map((o) => {
+                    var op = newEl("div", {
+                        class: o.selected ? "checked" : "",
+                        optEl: o,
+                    });
+                    var ic = newEl("input", { type: "checkbox", checked: o.selected });
+                    op.appendChild(ic);
+                    op.appendChild(newEl("label", { text: o.text }));
+                    op.addEventListener("click", () => {
+                        op.classList.toggle("checked");
+                        op.querySelector("input").checked =
+                            !op.querySelector("input").checked;
+                        op.optEl.selected = !!!op.optEl.selected;
+                        el.dispatchEvent(new Event("change"));
+                    });
+                    ic.addEventListener("click", (ev) => {
+                        ic.checked = !ic.checked;
+                    });
+                    list.appendChild(op);
+                });
+                div.listEl = listWrap;
+
+                div.refresh = () => {
+                    div
+                        .querySelectorAll("span.optext, span.placeholder")
+                        .forEach((t) => div.removeChild(t));
+                    var sels = Array.from(el.selectedOptions);
+                    if (
+                        sels.length > (el.attributes["multiselect-max-items"]?.value ?? 5)
+                    ) {
+                        div.appendChild(
+                            newEl("span", {
+                                class: ["optext", "maxselected"],
+                                text:
+                                    sels.length +
+                                    " " +
+                                    config.txtSelected,
+                            })
+                        );
+                    } else {
+                        sels.map((x) => {
+                            var c = newEl("span", {
+                                class: "optext",
+                                text: x.text,
+                                srcOption: x,
+                            });
+                            if (!el.attributes["disabled"]) {
+                                c.appendChild(
+                                    newEl("span", {
+                                        class: "optdel",
+                                        text: "🗙",
+                                        title: config.txtRemove,
+                                        onclick: (ev) => {
+                                            c.srcOption.classList.toggle("checked");
+                                            c.srcOption.selected = false;
+                                            c.remove();
+                                            el.dispatchEvent(new Event("change"));
+                                            div.refresh();
+                                            ev.stopPropagation();
+                                        },
+                                    })
+                                );
+                            }
+                            div.appendChild(c);
+                        });
+                    }
+                    if (0 == el.selectedOptions.length)
+                        div.appendChild(
+                            newEl("span", {
+                                class: "placeholder",
+                                text: el.attributes["placeholder"]?.value ?? config.placeholder,
+                            })
+                        );
+                };
+                div.refresh();
+            };
+            el.loadOptions();
+
+            search.addEventListener("input", function () {
+                list.querySelectorAll("div").forEach((d) => {
+                    var txt = d.querySelector("label").innerText.toUpperCase();
+                    d.style.display = txt.includes(search.value.toUpperCase())
+                        ? "block"
+                        : "none";
+                });
+            });
+
+            div.addEventListener("click", () => {
+                div.listEl.style.display = "block";
+                search.focus();
+                search.select();
+            });
+
+            document.addEventListener("click", function (event) {
+                if (!div.contains(event.target)) {
+                    listWrap.style.display = "none";
+                    div.refresh();
+                }
+            });
+        });
+    }
+
+    window.addEventListener("load", () => {
+        MultiselectDropdown(window.MultiselectDropdownOptions);
+    });
+</script>

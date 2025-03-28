@@ -1,0 +1,128 @@
+﻿  @model AdminLTE.MVC.ViewModels.MovieVM
+
+<div class="right_col" role="main">
+
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Add Movie</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <form asp-action="MovieAdd" method="post" id="formmovie" enctype="multipart/form-data" novalidate>
+                        <div class="card-body ">
+
+
+
+
+                            <div class=" col-lg-6 col-md-6 col-sm-12">
+                                <!-- text input -->
+                                <label for="MovieID">Movie ID<span class="required" style="color:red">*</span></label>
+                                <div class="field item form-group">
+
+                                    <input asp-for="MovieID" type="number" class="form-control " required="required" />
+                                    <span asp-validation-for="MovieID" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class=" col-lg-6 col-md-6 col-sm-12">
+                                <label for="MovieCode">Movie Code <span class="required" style="color:red">*</span></label>
+                                <div class="field item form-group ">
+
+                                    <input asp-for="MovieCode" type="text" class="form-control" required="required" />
+                                    <span asp-validation-for="MovieCode" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="card-body ">
+                            <div class=" col-lg-6 col-md-6 col-sm-12">
+                                <label for="Name">Name <span class="required" style="color:red">*</span></label>
+                                <div class="field item form-group">
+                                    <input asp-for="Name" type="text" class="form-control" required="required" />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                            <div class=" col-lg-6 col-md-6 col-sm-12">
+                                <label for="GradeCode">Grade Code <span class="required" style="color:red">*</span></label>
+                                <div class="field item form-group">
+                                    <input asp-for="GradeCode" type="text" class="form-control" required="required" />
+                                    <span asp-validation-for="GradeCode" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body ">
+                            <div class=" col-lg-6 col-md-6 col-sm-12">
+                                <label for="ProductionHouseCode">Production House Code <span class="required" style="color:red">*</span></label>
+                                <div class="field item form-group">
+                                    <input asp-for="ProductionHouseCode" type="text" class="form-control" required="required" />
+                                    <span asp-validation-for="ProductionHouseCode" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class=" col-lg-6 col-md-6 col-sm-12">
+                                <label for="LanguageCode">Language Code <span class="required" style="color:red">*</span></label>
+                                <div class="field item form-group">
+                                    <input asp-for="LanguageCode" type="text" class="form-control" required="required" />
+                                    <span asp-validation-for="LanguageCode" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body ">
+                            <div class=" col-lg-6 col-md-6 col-sm-12">
+                                <label for="ProductionType">Production Type <span class="required" style="color:red">*</span></label>
+                                <div class="field item form-group">
+                                    <input asp-for="ProductionType" type="number" class="form-control" required="required" />
+                                    <span asp-validation-for="ProductionType" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class=" col-lg-6 col-md-6 col-sm-12">
+                                <label for="ReleaseDate">Release Date <span class="required" style="color:red">*</span></label>
+                                <div class="field item form-group">
+                                    <input asp-for="ReleaseDate" type="date" class="form-control" required="required" />
+                                    <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body ">
+
+                            <div class=" col-lg-6 col-md-6 col-sm-12">
+                                <label for="StatusValue">Status Value <span class="required" style="color:red">*</span></label>
+                                <div class="field item form-group">
+                                    <input asp-for="StatusValue" type="number" class="form-control" required="required" />
+                                    <span asp-validation-for="StatusValue" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class=" col-lg-6 col-md-6 col-sm-12">
+                                <label for="Slug">Slug<span style="color:red">*</span></label>
+                                <div class="field item form-group">
+                                    <input asp-for="Slug" type="text" class="form-control" />
+                                    <span asp-validation-for="Slug" class="text-danger"></span>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <br />
+
+
+                        <div class="ln_solid">
+                            <div class="form-group">
+                                <div class="col-md-4 offset-md-3">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="reset" class="btn btn-success">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

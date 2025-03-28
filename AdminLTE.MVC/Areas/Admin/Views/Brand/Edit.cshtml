@@ -1,0 +1,73 @@
+﻿@model AdminLTE.MVC.ViewModels.BrandVM
+@{
+}
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Edit Brand</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <form asp-action="Edit" method="post" id="formid" enctype="multipart/form-data" novalidate>
+                            <div class="field item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align">Brand Code <span class="required" style="color:red">*</span></label>
+                                <div class="col-md-6 col-sm-6">
+                                    <input asp-for="BrandCode" type="text" class="form-control" placeholder="Enter Your Brand Code" required="required" />
+                                    <span asp-validation-for="BrandCode" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="field item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align">Brand Name <span class="required" style="color:red">*</span></label>
+                                <div class="col-md-6 col-sm-6">
+                                    <input asp-for="BrandName" type="text" class="form-control" placeholder="Enter Your Brand Name" required="required" />
+                                    <span asp-validation-for="BrandName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="field item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align">Email <span class="required" style="color:red">*</span></label>
+                                <div class="col-md-6 col-sm-6">
+                                    <input asp-for="Email" type="email" class="form-control" placeholder="Enter Your Email" required="required" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="field item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align">API Username <span class="required" style="color:red">*</span></label>
+                                <div class="col-md-6 col-sm-6">
+                                    <input asp-for="ApiUsername" type="text" class="form-control" placeholder="Enter Your API Username" required="required" />
+                                    <span asp-validation-for="ApiUsername" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="field item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align">API Password <span class="required" style="color:red">*</span></label>
+                                <div class="col-md-6 col-sm-6">
+                                    <input asp-for="ApiPassword" type="password" class="form-control" placeholder="Enter Your API Password" required="required" />
+                                    <span asp-validation-for="ApiPassword" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="field item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align">Status Value <span class="required" style="color:red">*</span></label>
+                                <div class="col-md-6 col-sm-6">
+                                    <input asp-for="StatusValue" type="number" class="form-control" placeholder="Enter Your Status Value" required="required" />
+                                    <span asp-validation-for="StatusValue" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="ln_solid">
+                                <div class="form-group">
+                                    <div class="col-md-6 offset-md-3">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="reset" class="btn btn-success">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

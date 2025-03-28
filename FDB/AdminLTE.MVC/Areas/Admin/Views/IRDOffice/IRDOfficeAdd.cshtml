@@ -1,0 +1,141 @@
+@model AdminLTE.MVC.ViewModels.IRDOfficeVM
+@{
+    ViewData["Title"] = "IRDOfficeAdd";
+}
+
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Add IRD</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+
+                        <form asp-action="IRDOfficeAdd" method="post" id="formid" enctype="multipart/form-data" novalidate>
+
+
+
+                            <div class="card-body ">
+
+
+
+
+                                <div class=" col-lg-6 col-md-6 col-sm-12">
+
+                                    <label for="AccountOperatingOffice">IRD Office Name<span class="required" style="color:red">*</span></label>
+                                    <div class="field item form-group">
+
+                                        <input asp-for="AccountOperatingOffice" type="text" class="form-control " required="required" />
+                                        <span asp-validation-for="AccountOperatingOffice" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class=" col-lg-6 col-md-6 col-sm-12">
+                                    <label for="Location">Location <span class="required" style="color:red">*</span></label>
+                                    <div class="field item form-group ">
+
+                                        <input asp-for="Location" type="text" class="form-control" required="required" />
+                                        <span asp-validation-for="Location" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body ">
+                                <div class=" col-lg-6 col-md-6 col-sm-12">
+
+                                    <label for="BankName">Bank Name<span class="required" style="color:red">*</span></label>
+                                    <div class="field item form-group">
+
+                                        <input asp-for="BankName" type="text" class="form-control " required="required" />
+                                        <span asp-validation-for="BankName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class=" col-lg-6 col-md-6 col-sm-12">
+                                    <label for="BankBranchName">Bank Branch Name <span class="required" style="color:red">*</span></label>
+                                    <div class="field item form-group ">
+
+                                        <input asp-for="BankBranchName" type="text" class="form-control" required="required" />
+                                        <span asp-validation-for="BankBranchName" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="card-body ">
+                                <div class=" col-lg-6 col-md-6 col-sm-12">
+
+                                    <label for="PANNumber">PAN Number<span class="required" style="color:red">*</span></label>
+                                    <div class="field item form-group">
+
+                                        <input asp-for="PANNumber" type="number" class="form-control " required="required" />
+                                        <span asp-validation-for="PANNumber" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class=" col-lg-6 col-md-6 col-sm-12">
+                                    <label for="VATNumber">VATNumber<span class="required" style="color:red">*</span></label>
+                                    <div class="field item form-group ">
+
+                                        <input asp-for="VATNumber" type="number" class="form-control" required="required" />
+                                        <span asp-validation-for="VATNumber" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="card-body ">
+                                <div class=" col-lg-6 col-md-6 col-sm-12">
+
+                                    <label for="AccountNo">Account No<span class="required" style="color:red">*</span></label>
+                                    <div class="field item form-group">
+
+                                        <input asp-for="AccountNo" type="number" class="form-control " required="required" />
+                                        <span asp-validation-for="AccountNo" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class=" col-lg-6 col-md-6 col-sm-12">
+                                    <label for="Email">Email<span class="required" style="color:red">*</span></label>
+                                    <div class="field item form-group ">
+
+                                        <input asp-for="Email" type="email" class="form-control" required="required" />
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="card-body ">
+                                <div class=" col-lg-6 col-md-6 col-sm-12">
+
+                                    <label for="RegNumber">RegNumber<span class="required" style="color:red">*</span></label>
+                                    <div class="field item form-group">
+
+                                        <input asp-for="RegNumber" type="number" class="form-control " required="required" />
+                                        <span asp-validation-for="RegNumber" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class=" col-lg-6 col-md-6 col-sm-12">
+                                    <label for="Phone">Phone<span class="required" style="color:red">*</span></label>
+                                    <div class="field item form-group ">
+
+                                        <input asp-for="Phone" type="tel" class="form-control" required="required" />
+                                        <span asp-validation-for="Phone" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="ln_solid">
+                                <div class="form-group">
+                                    <div class="col-md-6 offset-md-3">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="reset" class="btn btn-success">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
