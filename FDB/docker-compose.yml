@@ -1,0 +1,16 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "6000:8080"
+      - "643:443"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+    networks:
+      - fdfportal-network
+networks:
+  fdfportal-network:
+    driver: bridge
+    
