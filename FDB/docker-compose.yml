@@ -15,14 +15,14 @@ services:
     networks:
       - fdf-portal-network
     depends_on:
-      - sqlserver
+      - fdf-portal-sqlserver
     restart: always
 
-  sqlserver:
+  fdf-portal-sqlserver:
     platform: linux/amd64
     image: mcr.microsoft.com/mssql/server:2019-latest
-    container_name: sqlserver
-    hostname: sqlserver
+    container_name: fdf-portal-sqlserver
+    hostname: fdf-portal-sqlserver
     ports:
       - "1444:1433"
     environment:
