@@ -27,7 +27,7 @@ services:
       - "1444:1433"
     environment:
       ACCEPT_EULA: "Y"
-      MSSQL_SA_PASSWORD: ""
+      MSSQL_SA_PASSWORD: "6pBK1[6J"
       MSSQL_PID: "Enterprise"
       MSSQL_PRODUCT_KEY: "HMWJ3-KY3J2-NMVD7-KG4JR-X2G8G"
     volumes:
