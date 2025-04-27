@@ -1,5 +1,5 @@
 services:
-  api:
+  portal:
     build:
       context: .
       dockerfile: Dockerfile
@@ -9,8 +9,8 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
     networks:
-      - fdfportal-network
+      - fdf-portal-network
 networks:
-  fdfportal-network:
+  fdf-portal-network:
     driver: bridge
     

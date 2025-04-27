@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
@@ -6,10 +6,10 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["AdminLTE.MVC/AdminLTE.MVC.csproj", "FdfPortal/"]
+COPY ["AdminLTE.MVC/AdminLTE.MVC.csproj", "AdminLTE.MVC/"]
 RUN dotnet restore "AdminLTE.MVC/AdminLTE.MVC.csproj"
 COPY . .
-WORKDIR "/src/FdfPortal"
+WORKDIR "/src/AdminLTE.MVC"
 RUN dotnet build "AdminLTE.MVC.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
