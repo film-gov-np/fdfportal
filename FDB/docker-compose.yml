@@ -3,14 +3,41 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: fdf-portal
     ports:
       - "6000:8080"
       - "643:443"
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
+    volumes:
+      - /var/www/fdfportal/storage/uploads:/app/wwwroot/upload/img
+      - /var/www/fdfportal/storage/logs:/app/logs
     networks:
       - fdf-portal-network
+    depends_on:
+      - sqlserver
+    restart: always
+
+  sqlserver:
+    platform: linux/amd64
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sqlserver
+    hostname: sqlserver
+    ports:
+      - "1444:1433"
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ""
+      MSSQL_PID: "Enterprise"
+      MSSQL_PRODUCT_KEY: "HMWJ3-KY3J2-NMVD7-KG4JR-X2G8G"
+    volumes:
+      - /var/www/fdfportal/sqlserver/data:/var/opt/mssql/data
+      - /var/www/fdfportal/sqlserver/log:/var/opt/mssql/log
+      - /var/www/fdfportal/sqlserver/backup:/var/opt/mssql/backup
+    networks:
+      - fdf-portal-network
+    restart: always
+
 networks:
   fdf-portal-network:
     driver: bridge
-    
